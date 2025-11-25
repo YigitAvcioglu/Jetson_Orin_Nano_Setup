@@ -23,3 +23,25 @@ Yazma işlemi bittikten sonra SD kartı bilgisayardan çıkarın.
 3.  **En son** güç adaptörünü takarak cihazı açın.
 ---
 
+### Adım ****: CUDA Destekli OpenCV Derlemesi (Otomatik Script ile)
+
+Aşağıdaki komutlar CUDA destekli OpenCV 4.11.0 sürümünü kurar.
+
+> [!IMPORTANT]
+> Kuruluma başlamadan önce hafıza durumunuzu kontrol edin. Derleme işlemi için en az **8.5 GB** alana ihtiyacınız vardır.
+
+```bash
+# 1. Hafıza kontrolü yapın
+free -m
+
+# 2. Kurulum scriptini indirin
+wget https://github.com/Qengineering/Install-OpenCV-Jetson-Nano/raw/main/OpenCV-4-11-0.sh
+
+# 3. Çalıştırma izni verin ve kurulumu başlatın
+sudo chmod 755 ./OpenCV-4-11-0.sh
+./OpenCV-4-11-0.sh
+
+#4. Kurulum bittiğinde bellekte yer açın
+rm OpenCV-4-11-0.sh
+sudo rm -rf ~/opencv
+sudo rm -rf ~/opencv_contrib
