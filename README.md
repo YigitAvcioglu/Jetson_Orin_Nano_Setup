@@ -75,7 +75,7 @@ cd /Downloads
 wget https://catalog.ngc.nvidia.com/orgs/nvidia/resources/deepstream/files/deepstream-7.1_7.1.0-1_arm64.deb
 sudo apt-get install ./deepstream-7.1_7.1.0-1_arm64.deb
 ```
-### Adım 6: OpenCV Derlemesi 
+### Adım 6: OpenCV Derleme
 > [!IMPORTANT]
 > Kuruluma başlamadan önce hafıza durumunuzu kontrol edin. Derleme işlemi için en az **8.5 GB** alana ihtiyacınız vardır.
 
@@ -89,8 +89,10 @@ wget https://github.com/YigitAvcioglu/Jetson_Orin_Nano_Setup/blob/main/opencv_cu
 # 3. Çalıştırma izni verin ve başlatın
 sudo chmod 755 ./opencv_cuda_gst.sh
 ./opencv_cuda_gst.sh
+```
 
-# 4. Derleme bittiğinde bellekte yer açın
+Derleme bittiğinde bellekte yer açın
+```bash
 rm opencv_cuda_gst.sh
 sudo rm -r /usr/include/opencv4/opencv2
 sudo make install
