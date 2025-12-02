@@ -1,12 +1,7 @@
 # Jetson Orin Nano Kurulum Rehberi
-
-
-## Jetpack Kurulumu
-
-Bu bölüm, Jetson Orin Nano'yu çalıştırmak için gerekli olan **JetPack 6.2** işletim sisteminin SD Karta nasıl yazılıp boot edileceğini anlatır.
-
 ---
-
+## Jetpack Kurulumu
+Bu bölüm, Jetson Orin Nano'yu çalıştırmak için gerekli olan **JetPack 6.2** işletim sisteminin SD Karta nasıl yazılıp boot edileceğini anlatır.
 
 ### Adım 1: JetPack İmajını İndirme
 
@@ -23,10 +18,39 @@ Yazma işlemi bittikten sonra SD kartı bilgisayardan çıkarın.
 3.  **En son** güç adaptörünü takarak cihazı açın.
 ---
 
-### Adım ****: CUDA Destekli OpenCV Derlemesi (Otomatik Script ile)
+## Gerekli Kurulumlar
+Bu bölüm gerekli modüllerin kurulumunu anlatır
+### Adım 1: Numpy
+```bash
+pip install numpy==2.3.3   
+```
+### Adım 2: Torch
+```bash
+cd /Downloads
 
-Aşağıdaki komutlar CUDA destekli OpenCV 4.11.0 sürümünü kurar.
+wget https://pypi.jetson-ai-lab.io/jp6/cu126/+f/62a/1beee9f2f1470/torch-2.8.0-cp310-cp310-linux_aarch64.whl
+pip install torch-2.8.0-cp310-cp310-linux_aarch64.whl
 
+wget https://pypi.jetson-ai-lab.io/jp6/cu126/+f/81a/775c8af36ac85/torchaudio-2.8.0-cp310-cp310-linux_aarch64.whl
+pip install torchaudio-2.8.0-cp310-cp310-linux_aarch64.whl
+
+wget https://pypi.jetson-ai-lab.io/jp6/cu126/+f/907/c4c1933789645/torchvision-0.23.0-cp310-cp310-linux_aarch64.whl
+pip install torchvision-0.23.0-cp310-cp310-linux_aarch64.whl
+```
+
+Kurulum sonrasında kontrol edelim
+```bash
+python3.10 -c "import torch; print(torch.__version__); print('CUDA:', torch.cuda.is_available())"
+# CUDA: True olmalı
+```
+
+### Adım 3: Gstreamer
+```bash
+sudo apt install gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav
+sudo apt install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
+```
+
+### Adım 4: OpenCV Derlemesi 
 > [!IMPORTANT]
 > Kuruluma başlamadan önce hafıza durumunuzu kontrol edin. Derleme işlemi için en az **8.5 GB** alana ihtiyacınız vardır.
 
@@ -34,14 +58,21 @@ Aşağıdaki komutlar CUDA destekli OpenCV 4.11.0 sürümünü kurar.
 # 1. Hafıza kontrolü yapın
 free -m
 
-# 2. Kurulum scriptini indirin
+# 2. Scripti indirin
 wget https://github.com/Qengineering/Install-OpenCV-Jetson-Nano/raw/main/OpenCV-4-11-0.sh
 
-# 3. Çalıştırma izni verin ve kurulumu başlatın
+# 3. Çalıştırma izni verin ve başlatın
 sudo chmod 755 ./OpenCV-4-11-0.sh
 ./OpenCV-4-11-0.sh
 
-#4. Kurulum bittiğinde bellekte yer açın
+# 4. Derleme bittiğinde bellekte yer açın
 rm OpenCV-4-11-0.sh
 sudo rm -rf ~/opencv
 sudo rm -rf ~/opencv_contrib
+```
+
+Derleme sonrasında kontrol edelim
+```bash
+python3.10 -c "import cv2; print(cv2.getBuildInformation())"
+#CUDA: YES ve GStreamer: YES olmalı
+```
