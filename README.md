@@ -20,11 +20,25 @@ Yazma işlemi bittikten sonra SD kartı bilgisayardan çıkarın.
 
 ## Gerekli Kurulumlar
 Bu bölüm gerekli modüllerin kurulumunu anlatır
-### Adım 1: Numpy
+### Adım 1: Ultralytics
+```bash
+sudo apt update
+sudo apt install python3-pip -y
+pip install -U pip
+
+pip install ultralytics
+```
+Cihazı yeniden başlatın
+```bash
+sudo reboot
+```
+
+### Adım 2: Numpy
 ```bash
 pip install numpy==2.3.3   
 ```
-### Adım 2: Torch
+
+### Adım 3: Torch
 ```bash
 cd /Downloads
 
@@ -44,13 +58,24 @@ python3.10 -c "import torch; print(torch.__version__); print('CUDA:', torch.cuda
 # CUDA: True olmalı
 ```
 
-### Adım 3: Gstreamer
+### Adım 4: Gstreamer
 ```bash
 sudo apt install gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav
 sudo apt install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 ```
+### Adım 5: Deepstream
+Gerekli bağımlılıkları indirin
+```bash
+sudo apt install \libssl1.1 \libgstreamer1.0-0 \gstreamer1.0-tools \gstreamer1.0-plugins-good \gstreamer1.0-plugins-bad \gstreamer1.0-plugins-ugly
+\gstreamer1.0-libav \libgstrtspserver-1.0-0 \libjansson4 \libyaml-cpp-dev \libjson-glib-dev \libglew-dev \libegl1-mesa-dev
+```
 
-### Adım 4: OpenCV Derlemesi 
+```bash
+cd /Downloads
+wget https://catalog.ngc.nvidia.com/orgs/nvidia/resources/deepstream/files/deepstream-7.1_7.1.0-1_arm64.deb
+sudo apt-get install ./deepstream-7.1_7.1.0-1_arm64.deb
+```
+### Adım 6: OpenCV Derlemesi 
 > [!IMPORTANT]
 > Kuruluma başlamadan önce hafıza durumunuzu kontrol edin. Derleme işlemi için en az **8.5 GB** alana ihtiyacınız vardır.
 
