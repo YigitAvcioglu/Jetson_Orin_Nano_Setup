@@ -7,7 +7,7 @@ Bu bölüm, Jetson Orin Nano'yu çalıştırmak için gerekli olan **JetPack 6.2
 
 NVIDIA'nın resmi [JetPack 6.2 SD Card Image (.zip)](https://developer.nvidia.com/downloads/embedded/l4t/r36_release_v4.3/jp62-orin-nano-sd-card-image.zip) SD Kart imajını indirin.
 
-### Adım 2: İmajı SD Karta Yazdırma (Flashing)
+### Adım 2: İmajı SD Karta Yazdırma
 İndirme tamamlandıktan sonra [Balena Etcher](https://etcher.balena.io/) programından image'ı sd card'a yazın.
 
 ### Adım 3: Boot
@@ -92,6 +92,11 @@ sudo chmod 755 ./opencv_cuda_gst.sh
 
 # 4. Derleme bittiğinde bellekte yer açın
 rm opencv_cuda_gst.sh
+sudo rm -r /usr/include/opencv4/opencv2
+sudo make install
+sudo ldconfig
+make clean
+sudo apt-get update
 sudo rm -rf ~/opencv
 sudo rm -rf ~/opencv_contrib
 ```
