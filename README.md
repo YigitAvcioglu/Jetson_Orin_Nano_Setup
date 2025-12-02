@@ -84,14 +84,14 @@ sudo apt-get install ./deepstream-7.1_7.1.0-1_arm64.deb
 free -m
 
 # 2. Scripti indirin
-wget https://github.com/Qengineering/Install-OpenCV-Jetson-Nano/raw/main/OpenCV-4-11-0.sh
+wget https://github.com/YigitAvcioglu/Jetson_Orin_Nano_Setup/blob/main/opencv_cuda_gst.sh
 
 # 3. Çalıştırma izni verin ve başlatın
-sudo chmod 755 ./OpenCV-4-11-0.sh
-./OpenCV-4-11-0.sh
+sudo chmod 755 ./opencv_cuda_gst.sh
+./opencv_cuda_gst.sh
 
 # 4. Derleme bittiğinde bellekte yer açın
-rm OpenCV-4-11-0.sh
+rm opencv_cuda_gst.sh
 sudo rm -rf ~/opencv
 sudo rm -rf ~/opencv_contrib
 ```
