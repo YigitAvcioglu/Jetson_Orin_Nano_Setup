@@ -28,19 +28,10 @@ pip install -U pip
 
 pip install ultralytics
 ```
-Cihazı yeniden başlatın
-```bash
-sudo reboot
-```
 
-### Adım 2: Numpy
+### Adım 2: Torch
 ```bash
-pip install numpy==2.3.3   
-```
-
-### Adım 3: Torch
-```bash
-cd /Downloads
+cd Downloads/
 
 wget https://pypi.jetson-ai-lab.io/jp6/cu126/+f/62a/1beee9f2f1470/torch-2.8.0-cp310-cp310-linux_aarch64.whl
 pip install torch-2.8.0-cp310-cp310-linux_aarch64.whl
@@ -58,12 +49,12 @@ python3.10 -c "import torch; print(torch.__version__); print('CUDA:', torch.cuda
 # CUDA: True olmalı
 ```
 
-### Adım 4: Gstreamer
+### Adım 3: Gstreamer
 ```bash
 sudo apt install gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav
 sudo apt install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 ```
-### Adım 5: Deepstream
+### Adım 4: Deepstream
 Gerekli bağımlılıkları indirin
 ```bash
 sudo apt install \libssl1.1 \libgstreamer1.0-0 \gstreamer1.0-tools \gstreamer1.0-plugins-good \gstreamer1.0-plugins-bad \gstreamer1.0-plugins-ugly
@@ -71,11 +62,11 @@ sudo apt install \libssl1.1 \libgstreamer1.0-0 \gstreamer1.0-tools \gstreamer1.0
 ```
 
 ```bash
-cd /Downloads
+cd Downloads/
 wget https://catalog.ngc.nvidia.com/orgs/nvidia/resources/deepstream/files/deepstream-7.1_7.1.0-1_arm64.deb
 sudo apt-get install ./deepstream-7.1_7.1.0-1_arm64.deb
 ```
-### Adım 6: OpenCV Derleme
+### Adım 5: OpenCV Derleme
 > [!IMPORTANT]
 > Kuruluma başlamadan önce hafıza durumunuzu kontrol edin. Derleme işlemi için en az **8.5 GB** alana ihtiyacınız vardır.
 
