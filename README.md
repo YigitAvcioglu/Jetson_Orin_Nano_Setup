@@ -75,7 +75,7 @@ sudo apt-get install ./deepstream-7.1_7.1.0-1_arm64.deb
 free -m
 
 # 2. Scripti indirin
-wget https://github.com/YigitAvcioglu/Jetson_Orin_Nano_Setup/blob/main/opencv_cuda_gst.sh
+wget https://raw.githubusercontent.com/YigitAvcioglu/Jetson_Orin_Nano_Setup/main/opencv_cuda_gst.sh
 
 # 3. Çalıştırma izni verin ve başlatın
 sudo chmod 755 ./opencv_cuda_gst.sh
