@@ -55,16 +55,30 @@ sudo apt install gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0
 sudo apt install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 ```
 ### Adım 4: Deepstream
-Gerekli bağımlılıkları indirin
+Önce ngc indir
 ```bash
-sudo apt install \libssl1.1 \libgstreamer1.0-0 \gstreamer1.0-tools \gstreamer1.0-plugins-good \gstreamer1.0-plugins-bad \gstreamer1.0-plugins-ugly
-\gstreamer1.0-libav \libgstrtspserver-1.0-0 \libjansson4 \libyaml-cpp-dev \libjson-glib-dev \libglew-dev \libegl1-mesa-dev
+mkdir -p ~/ngc_cli && cd ~/ngc_cli
+
+wget -O ngccli_linux.zip https://org.ngc.nvidia.com/v2/resources/nvidia/ngc-apps/ngc_cli/versions/3.41.4/files/ngccli_linux.zip
+--2026-05-04 19:19:45--  https://org.ngc.nvidia.com/v2/resources/nvidia/ngc-apps/ngc_cli/versions/3.41.4/files/ngccli_linux.zip
+
+unzip ngccli_linux.zip
+chmod u+x ngc-cli/ngc
+echo 'export PATH="$PATH:'$(pwd)'/ngc-cli"' >> ~/.bashrc
+source ~/.bashrc
 ```
 
-```bash
-cd Downloads/
-wget https://catalog.ngc.nvidia.com/orgs/nvidia/resources/deepstream/files/deepstream-7.1_7.1.0-1_arm64.deb
+Deepstream indir
+```
+ngc registry resource download-version "nvidia/deepstream:7.1"
+cd deepstream_v7.1
+pip install deepstream_libraries-1.1-cp310-cp310-linux_arm64.whl
 sudo apt-get install ./deepstream-7.1_7.1.0-1_arm64.deb
+sudo apt-get install -f
+```
+kurulumu kontrol et
+```
+deepstream-app --version
 ```
 ### Adım 5: OpenCV Derleme
 > [!IMPORTANT]
