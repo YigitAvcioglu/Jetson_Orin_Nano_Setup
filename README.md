@@ -1,26 +1,26 @@
-# Jetson Orin Nano Kurulum Rehberi
+# Jetson Orin Nano Setup Guide
 ---
-## Jetpack Kurulumu
-Bu bölüm, Jetson Orin Nano'yu çalıştırmak için gerekli olan **JetPack 6.2** işletim sisteminin SD Karta nasıl yazılıp boot edileceğini anlatır.
+## JetPack Installation
+This section explains how to flash the JetPack 6.2 operating system to an SD card and boot the Jetson Orin Nano.
 
-### Adım 1: JetPack İmajını İndirme
+### Step 1: Download the JetPack Image
 
-NVIDIA'nın resmi [JetPack 6.2 SD Card Image (.zip)](https://developer.nvidia.com/downloads/embedded/l4t/r36_release_v4.3/jp62-orin-nano-sd-card-image.zip) SD Kart imajını indirin.
+Download the official NVIDIA [JetPack 6.2 SD Card Image (.zip)](https://developer.nvidia.com/downloads/embedded/l4t/r36_release_v4.3/jp62-orin-nano-sd-card-image.zip)
 
-### Adım 2: İmajı SD Karta Yazdırma
-İndirme tamamlandıktan sonra [Balena Etcher](https://etcher.balena.io/) programından image'ı sd card'a yazın.
+### Step 2: Flash the Image to the SD Card
+Once the download is complete, flash the image to the SD card using [Balena Etcher](https://etcher.balena.io/)
 
-### Adım 3: Boot
-Yazma işlemi bittikten sonra SD kartı bilgisayardan çıkarın.
+### Step 3: Boot
+After the flashing process finishes, safely remove the SD card from your computer.
 
-1.  SD Kartı, Jetson Orin Nano modülünün **alt tarafında** bulunan yuvaya takın.
-2.  Monitör, Klavye ve Mouse bağlantılarını yapın.
-3.  **En son** güç adaptörünü takarak cihazı açın.
+1. Insert the SD card into the slot located on the underside of the Jetson Orin Nano module.
+2. Connect your monitor, keyboard, and mouse.
+3.  Power on the device by connecting the power adapter last.
 ---
 
-## Gerekli Kurulumlar
-Bu bölüm gerekli modüllerin kurulumunu anlatır
-### Adım 1: Ultralytics
+## Required Installations
+This section explains the installation of necessary modules.
+### Step 1: Ultralytics
 ```bash
 sudo apt update
 sudo apt install python3-pip -y
@@ -29,7 +29,7 @@ pip install -U pip
 pip install ultralytics
 ```
 
-### Adım 2: Torch
+### Step 2: PyTorch
 ```bash
 cd Downloads/
 
@@ -43,60 +43,28 @@ wget https://pypi.jetson-ai-lab.io/jp6/cu126/+f/907/c4c1933789645/torchvision-0.
 pip install torchvision-0.23.0-cp310-cp310-linux_aarch64.whl
 ```
 
-Kurulum sonrasında kontrol edelim
+Verify the installation
 ```bash
 python3.10 -c "import torch; print(torch.__version__); print('CUDA:', torch.cuda.is_available())"
-# CUDA: True olmalı
+# must be "CUDA: True"
 ```
 
-### Adım 3: Gstreamer
+### Step 3: GStreamer
 ```bash
 sudo apt install gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav
 sudo apt install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 ```
-### Adım 4: Deepstream
-Önce ngc indir
+### Step 4: Build OpenCV from Source
 ```bash
-mkdir -p ~/ngc_cli && cd ~/ngc_cli
-
-wget -O ngccli_linux.zip https://org.ngc.nvidia.com/v2/resources/nvidia/ngc-apps/ngc_cli/versions/3.41.4/files/ngccli_linux.zip
---2026-05-04 19:19:45--  https://org.ngc.nvidia.com/v2/resources/nvidia/ngc-apps/ngc_cli/versions/3.41.4/files/ngccli_linux.zip
-
-unzip ngccli_linux.zip
-chmod u+x ngc-cli/ngc
-echo 'export PATH="$PATH:'$(pwd)'/ngc-cli"' >> ~/.bashrc
-source ~/.bashrc
-```
-
-Deepstream indir
-```
-ngc registry resource download-version "nvidia/deepstream:7.1"
-cd deepstream_v7.1
-pip install deepstream_libraries-1.1-cp310-cp310-linux_arm64.whl
-sudo apt-get install ./deepstream-7.1_7.1.0-1_arm64.deb
-sudo apt-get install -f
-```
-kurulumu kontrol et
-```
-deepstream-app --version
-```
-### Adım 5: OpenCV Derleme
-> [!IMPORTANT]
-> Kuruluma başlamadan önce hafıza durumunuzu kontrol edin. Derleme işlemi için en az **8.5 GB** alana ihtiyacınız vardır.
-
-```bash
-# 1. Hafıza kontrolü yapın
-free -m
-
-# 2. Scripti indirin
+# Download the script
 wget https://raw.githubusercontent.com/YigitAvcioglu/Jetson_Orin_Nano_Setup/main/opencv_cuda_gst.sh
 
-# 3. Çalıştırma izni verin ve başlatın
+# Grant execution permissions and run
 sudo chmod 755 ./opencv_cuda_gst.sh
 ./opencv_cuda_gst.sh
 ```
 
-Derleme bittiğinde bellekte yer açın
+Free up disk space after the build finishes
 ```bash
 rm opencv_cuda_gst.sh
 sudo rm -r /usr/include/opencv4/opencv2
@@ -108,8 +76,8 @@ sudo rm -rf ~/opencv
 sudo rm -rf ~/opencv_contrib
 ```
 
-Derleme sonrasında kontrol edelim
+Verify the OpenCV build
 ```bash
 python3.10 -c "import cv2; print(cv2.getBuildInformation())"
-#CUDA: YES ve GStreamer: YES olmalı
+# must be "CUDA: YES" and "GStreamer: YES"
 ```
